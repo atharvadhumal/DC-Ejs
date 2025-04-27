@@ -79,7 +79,7 @@ const createWindow = async () => {
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../../.erb/dll/preload.js'),
     },
-    // frame: false
+     frame: false
   });
 
   // mainWindow.setWindowButtonVisibility(true) only available on mac
