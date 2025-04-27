@@ -1,0 +1,60 @@
+:root {
+  --sidebar-bg: #e5e6e9;
+  --border-color: #d3d5d8;
+  --app-gray: #6e6f78;
+  --app-light-gray: #e4e5e8;
+  --app-deep-gray: #4e5058;
+  --inverse-white: white;
+  --inverse-black: black;
+  --mini-profile-details: #e0e2e4;
+  --input-bg-color: #e2e3e6;
+  --channel-container-height: 0px;
+  --text-box-placeholder: 'Message #channel-name';
+  --textbox-placeholder-display: 'flex';
+  --settings-sidebar-bg: #f0f1f3;
+  --settings-sidebar-item-hover-bg: #d7d9dc;
+  --profile-display-top-bg: #0d5d91;
+  --profile-tip-bg: #1cbc9d;
+  --edit-profile-btn-bg: #5865f2;
+  --online-status-bg: #23a55b;
+  --full-boost-bg: rgb(14,0,244);
+  --full-boost-linear-bg: linear-gradient(90deg, rgba(14,0,244,1) 0%, rgba(148,0,255,1) 100%);
+  --text-box-container-height: 100px;
+}
+
+@font-face {
+  font-family: 'GGSansRegular';
+  src: url('../../assets/gg-sans-2/gg\ sans\ Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GGSansBold';
+  src: url('../../assets/gg-sans-2/gg\ sans\ Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GGSansMedium';
+  src: url('../../assets/gg-sans-2/gg\ sans\ Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'GGSansSemiBold';
+  src: url('../../assets/gg-sans-2/gg\ sans\ Semibold.ttf') format('truetype');
+}
+
+body {
+  font-family: 'GGSansRegular';
+}
+
+.main-component {
+  height: 100vh;
+}
+
+.main-sidebar {
+  height: 100%;
+  width: 7.2% !important;
+}
+
+.main-display {
+  width: 92.8% !important;
+}
