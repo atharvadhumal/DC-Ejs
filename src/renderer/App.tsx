@@ -12,10 +12,7 @@ const App = React.memo(() => {
       <Router>
         <Routes>
           <Route path="/" element={<MainComponent />}>
-            <Route
-              path="server/:serverId"
-              element={<MainDisplay />}
-            />
+            <Route path="server/:serverId" element={<MainDisplay />} />
           </Route>
         </Routes>
       </Router>
