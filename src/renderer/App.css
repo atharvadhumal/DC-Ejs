@@ -43,7 +43,7 @@
 }
 
 body {
-  font-family: 'GGSansRegular';
+  font-family: 'GGSansRegular' !important;
 }
 
 .main-component {
@@ -52,14 +52,12 @@ body {
 
 .main-sidebar {
   height: 100%;
-  width: 7.2% !important;
+  width: 7% !important;
   padding: 0px;
-  /* justify-content: center;
-  align-items: start; */
 }
 
 .main-display {
-  width: 92.8% !important;
+  width: 93% !important;
 }
 
 .channel-btn {
@@ -77,4 +75,62 @@ body {
   height: 100%;
   object-fit: cover;
   border-radius: 15px;
+}
+
+.sub-sidebar {
+  overflow: hidden;
+  background-color: var(--sidebar-bg);
+}
+
+.sub-sidebar-header {
+  width: 100% !important;
+}
+
+.sub-sidebar-header button {
+  width: 100%;
+  border-radius: 0% !important;
+  background-color: transparent;
+  box-shadow: none;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--inverse-black);
+  text-transform: none;
+  font-size: 100%;
+  font-family: 'GGSansSemiBold';
+  display: flex;
+  justify-content: space-between;
+  padding: 13px;
+}
+.sub-sidebar-header button:hover, sub-sidebar-header button:active, sub-sidebar-header button:focus{
+background-color: transparent;
+box-shadow: none !important;
+border-bottom: 1px solid var(--border-color);
+color: var(--inverse-black);
+}
+
+.sub-sidebar-header button::after {
+  display: none;
+}
+
+.sub-sidebar-header button svg {
+  width: 22px;
+  height: 22px;
+}
+
+.level-boost-ui {
+  font-size: 75%;
+  text-transform: uppercase;
+  font-family: 'GGSansSemiBold';
+  color: var(--inverse-black);
+}
+
+.level-boost-ui .boost-txt {
+  font-family: 'GGSansRegular' !important;
+  text-transform: capitalize !important;
+  display: flex;
+  align-items: center;
+}
+
+.level-boost-ui .boost-txt svg {
+  width: 20px;
+  height: 20px;
 }
