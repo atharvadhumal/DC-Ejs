@@ -99,6 +99,7 @@ body {
   display: flex;
   justify-content: space-between;
   padding: 13px;
+  height: 50px;
 }
 .sub-sidebar-header button:hover, sub-sidebar-header button:active, sub-sidebar-header button:focus{
 background-color: transparent;
@@ -116,11 +117,37 @@ color: var(--inverse-black);
   height: 22px;
 }
 
+.sub-sidebar-inner {
+  height: calc(100% - (50px + 50px));
+  overflow: auto;
+  position: relative;
+}
+
+.sub-sidebar-inner::-webkit-scrollbar {
+  width: 4px;
+  border-radius: 50%;
+}
+.sub-sidebar-inner::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sub-sidebar-inner::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 10px;
+}
+.sub-sidebar-inner::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.sub-sidebar-inner:hover::-webkit-scrollbar-thumb {
+  background: rgb(190, 190, 190);
+}
+
 .level-boost-ui {
   font-size: 75%;
   text-transform: uppercase;
   font-family: 'GGSansSemiBold';
   color: var(--inverse-black);
+  padding: 15px 8px;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .level-boost-ui .boost-txt {
@@ -133,4 +160,276 @@ color: var(--inverse-black);
 .level-boost-ui .boost-txt svg {
   width: 20px;
   height: 20px;
+}
+
+.level-boost-ui .progress-bar {
+  width: 100%;
+  height: 4px;
+  border-radius: 12px;
+  background-color: var(--border-color);
+}
+
+.channel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: uppercase;
+  font-size: 80%;
+  font-family: 'GGSansSemiBold' !important;
+}
+
+.channel-header div {
+  display: flex;
+  align-items: center;
+}
+
+.channel-header svg {
+  width: 18px;
+  height: 18px;
+}
+
+.channel-header svg path {
+  fill: var(--app-gray);
+  stroke: var(--app-gray);
+}
+
+.channel-list-item {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'GGSansMedium' !important;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: var(--app-gray);
+}
+
+.channel-list-item:hover, .channel-list-item.active {
+  color: var(--inverse-black);
+  background-color: var(--border-color);
+}
+
+.channel-list-item svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.channel-list-item .hash-sign svg {
+  margin-right: 5px;
+}
+
+.channel-list-item .hash-sign svg {
+  width: 22px !important;
+  height: 22px !important;
+}
+
+.channel-list-item .hash-sign svg path {
+  fill: var(--app-gray) !important;
+  stroke: var(--app-gray) !important;
+}
+
+.channel-list-item svg path{
+  fill: var(--app-deep-gray) !important;
+}
+
+.channel-list-item div {
+  display: flex;
+  align-items: center;
+}
+
+.channel-list-item div:last-child {
+  display: none;
+}
+
+.channel-list-item:hover div:last-child, .channel-list-item.active div:last-child {
+  display: flex;
+}
+
+
+ .channel-list-item div:last-child svg:first-child{
+  margin-right: 5px;
+ }
+
+.sub-display-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  padding: 8px;
+  height: 50px;
+  font-family: 'GGSansMedium';
+  color: black;
+  -webkit-app-region: drag;
+}
+
+.sub-display-header > div {
+  display: flex;
+  align-items: center;
+}
+
+.sub-display-header > div div {
+  margin-right: 13px;
+}
+
+
+.sub-display-header svg {
+  width: 25px;
+  height: 25px;
+  -webkit-app-region: none !important;
+}
+
+.sub-display-header svg path {
+  fill: var(--app-gray);
+}
+
+.sub-display-header .search-box input {
+  padding: 5px;
+  height: 25px;
+  border: none;
+  background-color: var(--input-bg-color);
+  border-radius: 5px;
+  font-size: 90%;
+  outline: none;
+  width: 150px;
+  transition: width .2s linear;
+  -webkit-app-region: none !important;
+}
+
+.sub-display-header .search-box input:focus {
+  width: 250px !important;
+}
+
+.mini-profile-panel {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 8px;
+  font-size: 90%;
+  background-color: var(--mini-profile-details);
+}
+
+.mini-profile-panel div:first-child {
+  padding: 3px 1px ;
+  border-radius: 5px;
+}
+
+.mini-profile-panel div:first-child:hover{
+  background-color: var(--border-color);
+}
+
+
+.mini-profile-panel .profile-details > div{
+  line-height: 16px;
+}
+
+.mini-profile-panel .profile-details .status {
+  font-size: 85%;
+}
+
+.mini-profile-panel .profile-img {
+  flex-shrink: 0;
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
+  position: relative;
+  padding: 0px;
+  line-height: 0px !important;
+}
+
+.mini-profile-panel .profile-img::after {
+  content: ' ';
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  background-color: var(--online-status-bg);
+  border-radius: 50%;
+}
+
+.mini-profile-panel .profile-img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.mini-profile-panel svg {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.mini-profile-panel div:last-child div {
+  margin-right: 10px;
+}
+
+.mini-profile-panel svg path {
+  fill: var(--app-deep-gray) !important;
+}
+
+.mini-profile-panel .mic svg path {
+  stroke: var(--app-deep-gray) !important;
+}
+
+.mini-profile-panel > div {
+  display: flex;
+  align-items: center;
+}
+
+.text-box-container {
+  width: 100%;
+  padding: 0px 13px 15px;
+}
+
+.text-box-container .text-box-main {
+  width: 100%;
+  background-color: var(--input-bg-color);
+  border-radius: 8px;
+  padding: 10px 45px 10px 45px;
+  outline: none;
+  position: relative;
+  padding-right: 30px;
+}
+
+.text-box-container .text-box-main::after {
+  content: var(--text-box-placeholder);
+  color: gray;
+  /* position: absolute; */
+}
+
+.text-box-container .text-box-main svg {
+  width: 23px !important;
+  height: 23px !important;
+}
+
+.text-box-container .text-box-main svg path {
+  fill: var(--app-gray);
+}
+
+.text-box-container .text-box-main .left-icon {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+}
+
+.text-box-container .text-box-main .right-icons {
+  display: flex;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: auto;
+  align-items: center;
+}
+
+.text-box-container .text-box-main .right-icons .gif {
+  background-color: var(--app-gray);
+  color: var(--input-bg-color);
+  font-size: 80%;
+  font-family: 'GGSansMedium';
+  padding-right: 2px;
+  padding-left: 2px;
+  border-radius: 3px;
+  line-height: 20px;
+}
+
+.text-box-container .text-box-main .right-icons > div{
+  margin-right: 20px;
+  line-height: 0px;
 }

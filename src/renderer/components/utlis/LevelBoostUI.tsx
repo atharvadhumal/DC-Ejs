@@ -3,12 +3,14 @@ import Icons from "../../shared/icons";
 
 const LevelBoostUI = React.memo((props: any)=> {
   return (
-    <div className="level-boost-ui">
-      <div className="d-flex justify-content-between">
+    <div className="level-boost-ui mb-3">
+      <div className="d-flex justify-content-between mb-2">
         <div>GOAL: LVL 20</div>
 
         <div className="boost-txt">
-          <span>0/2 Boosts</span>
+          <span>
+            <span>0/2</span> Boosts
+          </span>
           <Icons.AngleRight />
         </div>
       </div>
