@@ -71,6 +71,16 @@ body {
   display: block;
 }
 
+.channel-btn {
+  background-color: var(--inverse-white);
+  border-radius: 50%;
+  padding: 6px;
+}
+
+.channel-btn div svg path {
+  fill: var(--app-deep-gray);
+}
+
 .channel-btn img {
   width: 100%;
   height: 100%;
@@ -79,7 +89,8 @@ body {
 }
 
 .sub-sidebar {
-  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: visible;
   background-color: #f2f3f5;
 }
 
@@ -295,7 +306,7 @@ color: var(--inverse-black);
   fill: var(--app-gray);
 }
 
-.sub-display-header .search-box input {
+.search-box input {
   padding: 5px;
   height: 25px;
   border: none;
@@ -580,6 +591,7 @@ color: var(--inverse-black);
 .message-box .user-name span {
   font-size: 75%;
   columns: var(--app-gray);
+  font-family: 'GGSansRegular';
 }
 
 /* ///////////////////////// */
@@ -594,11 +606,11 @@ color: var(--inverse-black);
 }
 
 .profile-previewer-d-none {
-  display: none;
+  display: none ;
 }
 
 .profile-previewer-d-flex {
-  display: flex;
+  display: flex ;
   animation: slideLeft .2s linear;
 }
 
@@ -915,4 +927,108 @@ color: var(--inverse-black);
 .profile-display-container .bottom-container .profile-edit-container .profile-edit-container-inner .profile-edit-list button {
   background-color: var(--app-deep-gray);
   font-size: 80%;
+}
+
+/* /////////////////////////// */
+/* Settings */
+/* /////////////////////////// */
+
+.settings-container {
+  height: 100vh;
+  position: relative;
+}
+
+.settings-container .app-dragger {
+  position: absolute;
+  top: 0px;
+  height: 40px;
+  width: 100%;
+  user-select: none;
+  -webkit-app-region: drag;
+}
+
+.settings-container .settings-sidebar .content-list {
+  min-width: 180px;
+}
+
+.settings-container .settings-sidebar {
+  background-color: var(--settings-sidebar-bg);
+  padding-top: 60px;
+}
+
+.settings-container .settings-sidebar .section-title {
+  font-size: 80%;
+  font-family: 'GGSansBold';
+  text-transform: uppercase;
+}
+
+.settings-container .settings-sidebar .section-item {
+  font-family: 'GGSansMedium';
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 2px;
+  color: var(--app-gray);
+}
+
+.settings-container .settings-sidebar .section-separator {
+  margin: 10px;
+  border: .5px solid var(--app-gray);
+
+}
+
+.settings-container .settings-sidebar .section-item:hover {
+  background-color: var(--settings-sidebar-item-hover-bg);
+  color: black;
+}
+
+.settings-container .close-button {
+  position: absolute;
+  top: 70px;
+  right: 30px;
+  border: 2px solid var(--app-gray);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-container .close-button .close-btn-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-container .close-button .close-btn-inner .text {
+  position: absolute;
+  bottom: -30px;
+  font-family: 'GGSansSemiBold';
+  font-size: 85%;
+}
+
+.settings-container .settings-title {
+  font-size: 120%;
+  font-family: 'GGSansSemiBold';
+  color: var(--inverse-black);
+}
+
+.sidebar-separator {
+  margin: 10px 0px;
+  border: 1px solid var(--app-gray);
+  width: 50%;
+  justify-self: center;
+}
+
+.header-search-box {
+  width: 100%;
+  height: 50px;
+  border-bottom: 1px solid var(--border-color);
+  align-items: center;
+}
+
+.header-search-box input {
+  width: 90%;
+  font-family: 'GGSansMedium';
 }

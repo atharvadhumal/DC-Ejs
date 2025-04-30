@@ -1,6 +1,7 @@
 import { MDBCol } from 'mdb-react-ui-kit';
 import React from 'react';
 import ServerBtn from '../utlis/ServerBtns';
+import Icons from '../../shared/icons';
 
 const MainSidebar = React.memo((props: any) => {
   return (
@@ -9,12 +10,17 @@ const MainSidebar = React.memo((props: any) => {
 
       <ServerBtn
         title="Test Server"
+        icon={<Icons.DiscordLogo />}
         url="server/0"
-        img="https://imageio.forbes.com/specials-images/imageserve/5f962df3991e5636a2f68758/0x0.jpg"
       />
+
+      <div className='d-flex justify-content-center'>
+        <div className="sidebar-separator"></div>
+      </div>
+
       <ServerBtn
         title="Test Server"
-        url="server/0"
+        url="server/test-server"
         img="https://imageio.forbes.com/specials-images/imageserve/5f962df3991e5636a2f68758/0x0.jpg"
       />
 

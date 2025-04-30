@@ -2,17 +2,24 @@ import React from "react";
 import Icons from "../../shared/icons";
 import { Link } from "react-router-dom";
 
-const ChannelListItem = React.memo(({url, title}: {url: string; title: string;}) => {
+const ChannelListItem = React.memo(({url, title, icon, tools}: {url: string; title: any; icon?:any; tools: boolean;}) => {
   return (
      <Link to={url} className="channel-list-item">
         <div>
-          <Icons.HashSign className='hash-sign'/>
-          <span>welcome-and-rules</span>
+          {icon || <Icons.HashSign className="hash-sign" />}
+          <span>{title}</span>
         </div>
+
         <div>
-          <Icons.AddUser />
-          <Icons.Settings />
+          {
+            tools === undefined &&
+            <>
+              <Icons.AddUser />
+              <Icons.Settings />
+            </>
+          }
         </div>
+
      </Link>
   )
 })
