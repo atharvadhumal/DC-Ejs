@@ -4,7 +4,7 @@ import ServerBtn from '../utlis/ServerBtns';
 
 const MainSidebar = React.memo((props: any) => {
   return (
-    <MDBCol md={3} className='main-sidebar flex-wrap d-block bg-info p-0'>
+    <MDBCol md={3} className='main-sidebar flex-wrap d-block p-0'>
       <div className='w-100' style={{height: 40, flexShrink: 0}}></div>
 
       <ServerBtn

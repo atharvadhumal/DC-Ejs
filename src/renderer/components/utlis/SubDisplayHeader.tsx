@@ -3,7 +3,7 @@ import Icons from "../../shared/icons";
 
 const SubDisplayHeader = React.memo((props: any) => {
   return (
-    <div className="sub-display-header">
+    <div className="sub-display-header w-100">
       <div className="header-title">
           <Icons.HashSign />
           <span>notes-resources</span>
