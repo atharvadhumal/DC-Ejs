@@ -1,20 +1,28 @@
 import React from "react";
 import Icons from "../../shared/icons";
 import { MDBBtn } from "mdb-react-ui-kit";
+import { useParams } from "react-router-dom";
 
 const WelcomeMessage = React.memo((props:any) => {
+  const routeParams = useParams()
   return (
     <div className="welcome-message">
         <div>
-          <Icons.HashSign />
+          {
+
+              routeParams.serverId == '0' ?
+              <Icons.DiscordLogo /> :
+              <Icons.HashSign />
+
+          }
         </div>
 
         <div className="title">
-          Welcome to #notes-resources
+          Welcome to {routeParams.channelId}
         </div>
 
         <div>
-          This is start of the #notes-resources channel
+          This is start of the {routeParams.channelId}
         </div>
 
         <div>

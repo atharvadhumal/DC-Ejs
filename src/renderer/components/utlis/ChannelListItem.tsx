@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Icons from "../../shared/icons";
 import { Link } from "react-router-dom";
+import { IChannelListItem } from "../../shared/types";
 
-const ChannelListItem = React.memo(({url, title, icon, tools}: {url: string; title: any; icon?:any; tools: boolean;}) => {
+const ChannelListItem = React.memo(({url, title, icon, tools, isActive}: IChannelListItem) => {
+
+
+
   return (
-     <Link to={url} className="channel-list-item">
+    <Link to={url} className={isActive ?  "channel-list-item active" : "channel-list-item"}>
         <div>
           {icon || <Icons.HashSign className="hash-sign" />}
           <span>{title}</span>

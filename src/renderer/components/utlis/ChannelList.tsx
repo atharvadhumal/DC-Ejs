@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ChannelListHeader from './ChannelListHeader';
 import ChannelListItem from './ChannelListItem';
+import { IChannelList } from "../../shared/types";
+import { useParams } from "react-router-dom";
 
-const ChannelList = React.memo(({title, channels}: {title:string; channels?: Array<{title: string; url:string}>}) => {
+const ChannelList = React.memo(({ title, channels }: IChannelList) => {
+
+
+  const routeParams = useParams()
+  const [channelId, setCurrentChannel] = useState<string>('')
+
+  useEffect(()=> {
+    setCurrentChannel(routeParams.channelId || '')
+  }, [routeParams])
+
   return (
     <div className="channel-list mb-3">
         <ChannelListHeader title={title} />
         {
-        channels?.map((channel) =>
-          <ChannelListItem title={channel.title} url={channel.url} />
+        channels?.map(channel =>
+          <ChannelListItem title={channel.title} url={channel.url} icon={channel.icon} isActive={channelId == channel.url}/>
         )
         }
      </div>

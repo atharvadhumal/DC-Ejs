@@ -25,7 +25,6 @@ const SubSidebar = React.memo((props: any) => {
 
         {routeParams.serverId == '0' && (
           <div className="mb-4">
-
             <div className="mb-2">
               <ChannelListItem
                 icon={
@@ -70,15 +69,47 @@ const SubSidebar = React.memo((props: any) => {
           </div>
         )}
 
-        {
-          routeParams.serverId == '0' ?
-          <ChannelList />:
+        {routeParams.serverId == '0' ? (
+          <ChannelList
+            title="Direct Messages"
+            channels={[
+              {
+                title: 'Atharva',
+                url: 'channel/test-dm',
+                icon: <Icons.DiscordLogo className="hash-sign" />,
+              },
+            ]}
+          />
+        ) : (
           <>
-          <ChannelList />
-          <ChannelList />
+            <ChannelList
+              title="Information"
+              channels={[
+                {
+                  title: 'welcome-and-rules',
+                  url: 'channel/welcome-and-rules',
+                },
+                {
+                  title: 'notes-resources',
+                  url: 'channel/notes-resources',
+                },
+              ]}
+            />
+            <ChannelList
+              title="Text channels"
+              channels={[
+                {
+                  title: 'general',
+                  url: 'channel/general',
+                },
+                {
+                  title: 'homework-help',
+                  url: 'channel/homework-help',
+                },
+              ]}
+            />
           </>
-        }
-
+        )}
       </div>
       <MiniProfilePanel />
     </MDBCol>

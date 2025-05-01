@@ -8,3 +8,16 @@ export interface IServerBtn {
   title: string;
   url: string;
 }
+
+export interface IChannelList {
+  title:string;
+  channels?: Array<{ title: string; url: string; icon: any }>;
+}
+
+export interface IChannelListItem {
+  url: string;
+  title: any;
+  icon?:any;
+  tools: boolean;
+  isActive?:boolean;
+}

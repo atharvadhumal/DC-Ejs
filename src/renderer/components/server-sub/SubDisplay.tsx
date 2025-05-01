@@ -4,9 +4,12 @@ import SubDisplayHeader from '../utlis/SubDisplayHeader';
 import TextBox from '../utlis/TextBox';
 import WelcomeMessage from '../utlis/WelcomeMessage';
 import MessageBox from '../utlis/MessageBox';
+import { useParams } from 'react-router-dom';
 
 const SubDisplay = React.memo((props: any) => {
   const textBoxRef = useRef<HTMLDivElement | null>(null);
+
+  const routeParams = useParams()
 
   return (
     <MDBCol
@@ -17,15 +20,7 @@ const SubDisplay = React.memo((props: any) => {
       <div className="sub-display-mid-container">
         <WelcomeMessage />
         <MessageBox />
-        <MessageBox />
-        <MessageBox />
-        <MessageBox />
-        <MessageBox />
-        <MessageBox />
-        <MessageBox />
-        <MessageBox />
-        <MessageBox />
-        <MessageBox />
+
       </div>
       <TextBox />
     </MDBCol>

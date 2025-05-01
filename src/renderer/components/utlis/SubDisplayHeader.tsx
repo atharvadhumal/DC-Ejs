@@ -1,12 +1,16 @@
 import React from "react";
 import Icons from "../../shared/icons";
+import { useParams } from "react-router-dom";
 
 const SubDisplayHeader = React.memo((props: any) => {
+
+  const routeParams = useParams()
+
   return (
     <div className="sub-display-header w-100">
       <div className="header-title">
           <Icons.HashSign />
-          <span>notes-resources</span>
+          <span>{routeParams.channelId}</span>
       </div>
       <div>
         <Icons.Thread />
