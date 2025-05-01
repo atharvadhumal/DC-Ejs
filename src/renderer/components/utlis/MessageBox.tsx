@@ -1,8 +1,9 @@
 import React, { useCallback, useLayoutEffect, useRef } from "react";
 import Icons from "../../shared/icons";
 import ProfilePreview from "../profile-comps/ProfilePreview";
+import { TMessage } from "../../shared/types";
 
-const MessageBox = React.memo((props: any) => {
+const MessageBox = React.memo(({msg}: {msg: TMessage}) => {
   const profilePreviewerRef = useRef<HTMLDivElement | null>(null);
 
   const handleShowPreviewer = useCallback((e:any) => {
@@ -56,16 +57,16 @@ const MessageBox = React.memo((props: any) => {
             false ? <Icons.DiscordLogo /> : <img src="https://imageio.forbes.com/specials-images/imageserve/5f962df3991e5636a2f68758/0x0.jpg" alt="" />
           }
 
-          <ProfilePreview ref={profilePreviewerRef} />
+          <ProfilePreview user_profile={msg.profile} ref={profilePreviewerRef} />
         </div>
 
         <div>
           <div className="user-name">
-            Atharva <span>Today at 1:26 pm</span>
+            {msg.profile.name} <span>{msg.date}</span>
           </div>
 
           <div className="message-display">
-              hello hi this is message
+              {msg.message}
           </div>
         </div>
 

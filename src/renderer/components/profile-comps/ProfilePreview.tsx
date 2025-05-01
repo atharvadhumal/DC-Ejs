@@ -3,7 +3,7 @@ import Icons from "../../shared/icons";
 import { MDBBtn } from "mdb-react-ui-kit";
 import { TUserProfile } from "../../shared/types";
 
-const ProfilePreview = React.memo(React.forwardRef((props: any, ref: any) => {
+const ProfilePreview = React.memo(React.forwardRef(({user_profile}: {user_profile: TUserProfile}, ref: any) => {
     return (
         <div ref={ref} className="profile-previewer profile-previewer-d-none">
             <div className="previewer-display-container">
@@ -13,7 +13,7 @@ const ProfilePreview = React.memo(React.forwardRef((props: any, ref: any) => {
                     <div className="profile-name-container">
                         <div className="img-container">
                             <div>
-                                <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRcbLjcZKWWHRRpf5gdOSCI78jLz3gpNgL67AcTD3zFE-zU_GTG" alt="" />
+                                <img src={user_profile.image} alt="" />
                             </div>
                         </div>
                         <div className="icon-container">
@@ -25,14 +25,14 @@ const ProfilePreview = React.memo(React.forwardRef((props: any, ref: any) => {
                     <div className="profile-edit-container mt-2">
                         <div className="profile-edit-container-inner">
                             <div className="profile-names mb-3">
-                                <div>Atharva</div>
-                                <div>cnctr24</div>
+                                <div>{user_profile.name}</div>
+                                <div>{user_profile.user_name}</div>
                             </div>
 
                             <div className="member-since">
                                 <div className="title">Member Since</div>
                                 <div className="content">
-                                    <span>20sept 2022</span>
+                                    <span>{user_profile.date_joined}</span>
                                     <Icons.Dot />
                                     <span>{new Date().toLocaleString()}</span>
                                 </div>

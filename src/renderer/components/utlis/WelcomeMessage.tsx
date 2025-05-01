@@ -26,7 +26,7 @@ const WelcomeMessage = React.memo((props:any) => {
         </div>
 
         <div>
-          <MDBBtn>
+          <MDBBtn className="m-0 px-0">
             <Icons.EditIcon className="mx-2" /> Edit Channel
           </MDBBtn>
         </div>

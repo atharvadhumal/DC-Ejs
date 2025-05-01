@@ -33,7 +33,7 @@ const MainProfie = React.memo((props: any) => {
                                 </div>
                                 <div><MDBBtn>Edit</MDBBtn></div>
                             </div>
-                            
+
                             <div className="profile-edit-list mb-3">
                                 <div>
                                     <div className="list-title">Username</div>
@@ -41,7 +41,7 @@ const MainProfie = React.memo((props: any) => {
                                 </div>
                                 <div><MDBBtn>Edit</MDBBtn></div>
                             </div>
-                            
+
                             <div className="profile-edit-list mb-3">
                                 <div>
                                     <div className="list-title">Email</div>
@@ -49,7 +49,7 @@ const MainProfie = React.memo((props: any) => {
                                 </div>
                                 <div><MDBBtn>Edit</MDBBtn></div>
                             </div>
-                            
+
                             <div className="profile-edit-list">
                                 <div>
                                     <div className="list-title">Phone number</div>

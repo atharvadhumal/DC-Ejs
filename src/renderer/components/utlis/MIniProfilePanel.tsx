@@ -1,6 +1,7 @@
 import React, { useCallback, useRef } from "react";
 import Icons from "../../shared/icons";
 import ProfilePreview from "../profile-comps/ProfilePreview";
+import { Link } from "react-router-dom";
 
 const MiniProfilePanel = React.memo((props:any) => {
   const profilePreviewerRef = useRef<HTMLDivElement | null>(null);
@@ -39,7 +40,9 @@ const MiniProfilePanel = React.memo((props:any) => {
       <div>
         <Icons.MicMuted className="mic" />
         <Icons.Headset />
+        <Link to={'/settings'}>
         <Icons.Settings />
+        </Link>
       </div>
     </div>
   );

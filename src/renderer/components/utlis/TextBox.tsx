@@ -1,10 +1,16 @@
 import React, { useCallback, useRef } from "react";
 import { useParams } from 'react-router-dom';
 import Icons from "../../shared/icons";
+import { useAppDispatch, useAppSelector } from "../../shared/rdx-hooks";
+import { updateMessages } from "../../shared/rdx-slice";
+import { TMessage } from "../../shared/types";
+import { socket_inst } from "../../shared/functions";
 
 const TextBox = React.memo((props: any) => {
   const routeParams = useParams();
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const dispatch = useAppDispatch();
+  const userProfile = useAppSelector(state => state.main.user_profile)
 
   const handleOnInput = React.useCallback((e: any) => {
 
@@ -33,8 +39,20 @@ const TextBox = React.memo((props: any) => {
     if(e.key.toLowerCase() == 'enter'  && !e.shiftKey) {
       console.log(targetEl.innerText.trim());
 
+      if(targetEl.innerText.trim() == '') return;
+
+      const messageObj: TMessage = {
+        message: targetEl.innerText.trim(),
+        profile: userProfile,
+        date: new Date().toLocaleString(),
+        channelId: routeParams.channelId as string
+      }
+      dispatch(updateMessages(messageObj))
+      socket_inst.emit('send-message', messageObj)
+      targetEl.innerText = ''
+      document.documentElement.style.setProperty('--text-box-placeholder', `"Message #${routeParams.channelId}"`)
     }
-  }, [])
+  }, [routeParams])
 
   React.useLayoutEffect(() => {
     document.documentElement.style.setProperty(

@@ -1,12 +1,31 @@
 export interface IMainState {
-  value: number;
+  messages: Array<TMessage>;
+  user_profile: TUserProfile;
+  show_join_server: boolean;
+  show_add_channel: boolean;
+}
+
+export type TMessage = {
+  message: string;
+  profile: TUserProfile;
+  date: string;
+  channelId: string;
+}
+
+export type TUserProfile = {
+  name: string;
+  user_name: string;
+  date_joined:string;
+  id:number;
+  image:string;
 }
 
 export interface IServerBtn {
   icon?: any;
   img?: string;
   title: string;
-  url: string;
+  url?: string;
+  onClick?: any;
 }
 
 export interface IChannelList {
