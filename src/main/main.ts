@@ -14,6 +14,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import { loginWithGoogle, isLoggedIn, logout, getCurrentUser } from './auth';
 
 class AppUpdater {
   constructor() {
@@ -30,6 +31,51 @@ ipcMain.on('ipc-example', async (event, arg) => {
   console.log(msgTemplate(arg));
   event.reply('ipc-example', msgTemplate('pong'));
 });
+
+// Set up IPC handlers for auth operations
+function setupAuthHandlers() {
+  // Handle login request
+  ipcMain.handle('auth:login', async () => {
+    if (!mainWindow) return null;
+    try {
+      return await loginWithGoogle(mainWindow);
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
+    }
+  });
+
+  // Check if user is logged in
+  ipcMain.handle('auth:is-logged-in', async () => {
+    try {
+      return await isLoggedIn();
+    } catch (error) {
+      console.error('isLoggedIn error:', error);
+      return false;
+    }
+  });
+
+  // Get current user info
+  ipcMain.handle('auth:get-current-user', async () => {
+    try {
+      return await getCurrentUser();
+    } catch (error) {
+      console.error('getCurrentUser error:', error);
+      return null;
+    }
+  });
+
+  // Handle logout
+  ipcMain.handle('auth:logout', async () => {
+    try {
+      await logout();
+      return true;
+    } catch (error) {
+      console.error('Logout error:', error);
+      throw error;
+    }
+  });
+}
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -78,8 +124,10 @@ const createWindow = async () => {
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../../.erb/dll/preload.js'),
+      nodeIntegration: false,
+      contextIsolation: true,
     },
-     frame: false
+    frame: false
   });
 
   // mainWindow.setWindowButtonVisibility(true) only available on mac
@@ -130,7 +178,24 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
+    // Setup auth handlers before creating the window
+    setupAuthHandlers();
     createWindow();
+
+    // Check if user is already logged in and restore session
+    (async () => {
+      if (await isLoggedIn() && mainWindow) {
+        try {
+          const user = await getCurrentUser();
+          if (user) {
+            mainWindow.webContents.send('auth:restore-session', user);
+          }
+        } catch (error) {
+          console.error('Failed to restore session:', error);
+        }
+      }
+    })();
+
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.

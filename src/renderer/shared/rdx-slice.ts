@@ -1,42 +1,46 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import { IMainState, TMessage } from './types'
+// src/renderer/shared/rdx-slice.ts
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TMessage, TUserProfile } from './types';
 
+interface MainState {
+  show_join_server: boolean;
+  show_add_channel: boolean;
+  messages: TMessage[];
+  user_profile: TUserProfile;
+}
 
-
-// Define the initial state using that type
-const initialState: IMainState = {
+const initialState: MainState = {
+  show_join_server: false,
+  show_add_channel: false,
   messages: [],
   user_profile: {
-    id: 1,
-    name: 'Atharva',
-    user_name: 'atharva24',
-    date_joined: 'Sep 12, 2025',
-    image:"https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRcbLjcZKWWHRRpf5gdOSCI78jLz3gpNgL67AcTD3zFE-zU_GTG"
-  },
-  show_join_server: false,
-  show_add_channel: false
-}
+    name: 'Guest',
+    user_name: 'guest',
+    image: 'https://via.placeholder.com/150',
+    date_joined: new Date().toLocaleDateString(),
+    status: 'Online'
+  }
+};
 
 export const mainSlice = createSlice({
   name: 'main',
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    // Use the PayloadAction type to declare the contents of `action.payload`
     setShowJoinServer: (state, action: PayloadAction<boolean>) => {
-      state.show_join_server = action.payload
+      state.show_join_server = action.payload;
     },
     setShowAddChannel: (state, action: PayloadAction<boolean>) => {
-      state.show_add_channel = action.payload
+      state.show_add_channel = action.payload;
     },
     updateMessages: (state, action: PayloadAction<TMessage>) => {
-      state.messages.push(action.payload)
+      state.messages.push(action.payload);
     },
+    setUserProfile: (state, action: PayloadAction<TUserProfile>) => {
+      state.user_profile = action.payload;
+    }
   },
-})
+});
 
-export const { updateMessages, setShowJoinServer, setShowAddChannel } = mainSlice.actions
+export const { setShowJoinServer, setShowAddChannel, updateMessages, setUserProfile } = mainSlice.actions;
 
-
-export default mainSlice.reducer
+export default mainSlice.reducer;
