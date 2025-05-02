@@ -38,8 +38,8 @@ const getStore = async () => {
 };
 
 // OAuth2 config
-const clientId = '79173346276-stq37bvrdvonpd1rba3f2vt4ng5jev6f.apps.googleusercontent.com';
-const clientSecret = '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';
+const clientId = 'process.env.GOOGLE_CLIENT_ID';
+const clientSecret = 'process.env.GOOGLE_CLIENT_SECRET';
 const redirectUri = 'http://localhost:1212';
 const scopes = [
   'https://www.googleapis.com/auth/userinfo.email',

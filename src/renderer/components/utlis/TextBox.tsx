@@ -1,84 +1,131 @@
-import React, { useCallback, useRef } from "react";
-import { useParams } from 'react-router-dom';
+import React, { useCallback, useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Icons from "../../shared/icons";
 import { useAppDispatch, useAppSelector } from "../../shared/rdx-hooks";
 import { updateMessages } from "../../shared/rdx-slice";
 import { TMessage } from "../../shared/types";
-import { socket_inst } from "../../shared/functions";
+import { socket_inst, sendMessage, joinChannel } from "../../shared/functions";
 
-const TextBox = React.memo((props: any) => {
+const TextBox = React.memo(() => {
   const routeParams = useParams();
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const textBoxRef = useRef<HTMLDivElement | null>(null);
   const dispatch = useAppDispatch();
-  const userProfile = useAppSelector(state => state.main.user_profile)
+  const userProfile = useAppSelector(state => state.main.user_profile);
+  const channelId = routeParams.channelId || '';
 
-  const handleOnInput = React.useCallback((e: any) => {
-
-    document.documentElement.style.setProperty('--text-box-container-height', containerRef.current?.clientHeight + 'px')
-
-    const targetEl = e.currentTarget
-
-      if (targetEl.innerText !== '') {
-        document.documentElement.style.setProperty(
-          '--text-box-placeholder',
-          '""',
-        );
-      } else {
-        document.documentElement.style.setProperty(
-          '--text-box-placeholder',
-          `"Message #${routeParams.channelId}"`,
-        );
-      }
-      // text-box-main
-    },
-    [routeParams, containerRef],
-  );
-
-  const handleKeyUp = useCallback((e:any) => {
-    const targetEl = e.currentTarget
-    if(e.key.toLowerCase() == 'enter'  && !e.shiftKey) {
-      console.log(targetEl.innerText.trim());
-
-      if(targetEl.innerText.trim() == '') return;
-
-      const messageObj: TMessage = {
-        message: targetEl.innerText.trim(),
-        profile: userProfile,
-        date: new Date().toLocaleString(),
-        channelId: routeParams.channelId as string
-      }
-      dispatch(updateMessages(messageObj))
-      socket_inst.emit('send-message', messageObj)
-      targetEl.innerText = ''
-      document.documentElement.style.setProperty('--text-box-placeholder', `"Message #${routeParams.channelId}"`)
+  // Join the channel when it changes
+  useEffect(() => {
+    if (channelId) {
+      joinChannel(channelId);
     }
-  }, [routeParams])
+  }, [channelId]);
 
-  React.useLayoutEffect(() => {
+  // Update placeholder text when channel changes
+  useEffect(() => {
+    updatePlaceholder('');
+    if (textBoxRef.current) {
+      textBoxRef.current.innerText = '';
+    }
+  }, [channelId]);
+
+  // Update container height and placeholder text
+  const updatePlaceholder = (text: string) => {
     document.documentElement.style.setProperty(
       '--text-box-placeholder',
-      `"Message #${routeParams.channelId}"`,
+      text ? '""' : `"Message #${channelId}"`
     );
-  }, [routeParams]);
+  };
+
+  const handleOnInput = useCallback((e: React.FormEvent<HTMLDivElement>) => {
+    // Update container height
+    if (containerRef.current) {
+      document.documentElement.style.setProperty(
+        '--text-box-container-height',
+        `${containerRef.current.clientHeight}px`
+      );
+    }
+
+    // Update placeholder
+    const target = e.currentTarget;
+    updatePlaceholder(target.innerText);
+  }, [channelId]);
+
+  const handleKeyUp = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
+    // Send message on Enter (but not with Shift+Enter)
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+
+      const target = e.currentTarget;
+      const message = target.innerText.trim();
+
+      if (!message) return;
+
+      // Create message object
+      const messageObj: TMessage = {
+        message: message,
+        profile: userProfile,
+        date: new Date().toLocaleString(),
+        channelId: channelId
+      };
+
+      // Update messages in Redux
+      dispatch(updateMessages(messageObj));
+
+      // Send message through socket
+      socket_inst.emit('send-message', messageObj);
+
+      // Also call the sendMessage function for compatibility
+      sendMessage(message, channelId, userProfile);
+
+      // Clear input
+      target.innerText = '';
+      updatePlaceholder('');
+    }
+  }, [channelId, userProfile, dispatch]);
+
+  // Handle paste to strip formatting
+  const handlePaste = useCallback((e: React.ClipboardEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const text = e.clipboardData.getData('text/plain');
+    document.execCommand('insertText', false, text);
+  }, []);
+
+  // Prevent default on Enter key
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault(); // Prevent default to avoid new line
+    }
+  }, []);
+
+  // Equivalent to useLayoutEffect in the second implementation
+  useEffect(() => {
+    document.documentElement.style.setProperty('--text-box-placeholder', `"Message #${channelId}"`);
+  }, [channelId]);
 
   return (
     <div ref={containerRef} className="text-box-container">
-      <div onInput={handleOnInput} className="text-box-main" onKeyUp={handleKeyUp}
-      contentEditable={true}>
-      </div>
+      <div
+        ref={textBoxRef}
+        className="text-box-main"
+        contentEditable={true}
+        onInput={handleOnInput}
+        onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyUp}
+        onPaste={handlePaste}
+      ></div>
 
-          <div className="left-icon">
-            <Icons.PlusCircle />
-          </div>
-          <div className="right-icons">
-              <Icons.GiftBox />
-              <Icons.GifIcon className='gif' />
-              <Icons.SmileyFaceBox />
-              <Icons.SmileyFace />
-          </div>
-
+      <div className="left-icon">
+        <Icons.PlusCircle />
       </div>
-  )
-})
+      <div className="right-icons">
+        <Icons.GiftBox />
+        <Icons.GifIcon className='gif' />
+        <Icons.SmileyFaceBox />
+        <Icons.SmileyFace />
+      </div>
+    </div>
+  );
+});
 
 export default TextBox;

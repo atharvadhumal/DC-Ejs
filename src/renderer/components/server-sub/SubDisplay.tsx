@@ -10,9 +10,12 @@ import { useAppSelector } from '../../shared/rdx-hooks';
 const SubDisplay = React.memo((props: any) => {
   const textBoxRef = useRef<HTMLDivElement | null>(null);
 
-  const routeParams = useParams()
-
+  const routeParams = useParams();
+  const channelId = routeParams.channelId || '';
   const messages = useAppSelector(state => state.main.messages);
+
+  // Get messages for the current channel (or empty array if none exist)
+  const channelMessages = messages[channelId] || [];
 
   return (
     <MDBCol
@@ -22,14 +25,10 @@ const SubDisplay = React.memo((props: any) => {
       <SubDisplayHeader />
       <div className="sub-display-mid-container">
         <WelcomeMessage />
-          {
-            messages.filter(m => m.channelId == routeParams.channelId).map(msg =>
-              <MessageBox msg={msg}/>
 
-            )
-          }
-
-
+        {channelMessages.map((msg, index) => (
+          <MessageBox key={msg.id || index} msg={msg} />
+        ))}
       </div>
       <TextBox />
     </MDBCol>

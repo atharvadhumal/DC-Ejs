@@ -22,7 +22,7 @@ const JoinServer = React.memo((props: any) => {
                 <MDBCol md={5} className="join-server-inner p-0">
                     <div className="title">Create Your Server</div>
                     <div className="description">
-                        Your server is where you and your friends hang out. Make 
+                        Your server is where you and your friends hang out. Make
                         yours and start talking.
                     </div>
                     <div className="server-info">

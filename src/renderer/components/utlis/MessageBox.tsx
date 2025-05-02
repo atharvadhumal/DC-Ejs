@@ -50,11 +50,14 @@ const MessageBox = React.memo(({msg}: {msg: TMessage}) => {
     };
   }, [profilePreviewerRef.current]);
 
+  // Safely handle profile data - use a default name if profile is null
+  const displayName = msg.profile?.name || 'Unknown User';
+
   return (
     <div className="message-box mb-2">
         <div className="profile-img-trigger" onClick={handleShowPreviewer}>
           {
-            false ? <Icons.DiscordLogo /> : <img src="https://imageio.forbes.com/specials-images/imageserve/5f962df3991e5636a2f68758/0x0.jpg" alt="" />
+            false ? <Icons.DiscordLogo /> : <img src={msg.profile?.picture || "https://imageio.forbes.com/specials-images/imageserve/5f962df3991e5636a2f68758/0x0.jpg"} alt="" />
           }
 
           <ProfilePreview user_profile={msg.profile} ref={profilePreviewerRef} />
@@ -62,7 +65,7 @@ const MessageBox = React.memo(({msg}: {msg: TMessage}) => {
 
         <div>
           <div className="user-name">
-            {msg.profile.name} <span>{msg.date}</span>
+            {displayName} <span>{msg.date}</span>
           </div>
 
           <div className="message-display">

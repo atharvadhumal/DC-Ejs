@@ -2,7 +2,7 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
 // Type for Google user
-interface GoogleUser {
+export interface GoogleUser {
   id: string;
   email: string;
   name: string;
@@ -11,21 +11,37 @@ interface GoogleUser {
   family_name?: string;
 }
 
+export interface ElectronHandler {
+  auth: {
+    login(): Promise<GoogleUser | null>;
+    logout(): Promise<boolean>;
+    isLoggedIn(): Promise<boolean>;
+    getCurrentUser(): Promise<GoogleUser | null>;
+    onAuthSuccess(callback: (user: GoogleUser) => void): void;
+    onAuthError(callback: (error: string) => void): void;
+    onRestoreSession(callback: (user: GoogleUser) => void): void;
+  };
+  ipcRenderer: {
+    sendMessage(channel: string, args: unknown[]): void;
+    on(channel: string, func: (...args: unknown[]) => void): (() => void) | undefined;
+    once(channel: string, func: (...args: unknown[]) => void): void;
+  };
+}
+
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
-contextBridge.exposeInMainWorld('electronAPI', {
-  // Authentication methods
+const electronHandler: ElectronHandler = {
   auth: {
-    login: async (): Promise<GoogleUser | null> => {
+    login: async () => {
       return await ipcRenderer.invoke('auth:login');
     },
-    logout: async (): Promise<boolean> => {
+    logout: async () => {
       return await ipcRenderer.invoke('auth:logout');
     },
-    isLoggedIn: async (): Promise<boolean> => {
+    isLoggedIn: async () => {
       return await ipcRenderer.invoke('auth:is-logged-in');
     },
-    getCurrentUser: async (): Promise<GoogleUser | null> => {
+    getCurrentUser: async () => {
       return await ipcRenderer.invoke('auth:get-current-user');
     },
     onAuthSuccess: (callback: (user: GoogleUser) => void) => {
@@ -44,7 +60,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
       ipcRenderer.on('auth:restore-session', (_event, user) => callback(user));
     }
   },
-  // You can add more exposed APIs here if needed
   ipcRenderer: {
     sendMessage(channel: string, args: unknown[]) {
       ipcRenderer.send(channel, args);
@@ -62,7 +77,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
       ipcRenderer.once(channel, (_event, ...args) => func(...args));
     },
   },
-});
+};
+
+contextBridge.exposeInMainWorld('electronAPI', electronHandler);
 
 // Log that preload script has executed
 console.log('Preload script loaded successfully');

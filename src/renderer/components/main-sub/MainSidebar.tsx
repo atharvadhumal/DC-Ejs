@@ -29,13 +29,13 @@ const MainSidebar = React.memo((props: any) => {
         img="https://imageio.forbes.com/specials-images/imageserve/5f962df3991e5636a2f68758/0x0.jpg"
       />
 
-      <ServerBtn
+      {/* <ServerBtn
         title="Add Channel"
         icon={<Icons.Plus className="add-server" />}
         onClick={(e: any) => {
-          e.preventDefault(dispatch(setShowJoinServer(true)));
+          return e.preventDefault(dispatch(setShowJoinServer(true)));
         }}
-      />
+      /> */}
 
     </MDBCol>
   );

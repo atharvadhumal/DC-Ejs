@@ -1,61 +1,125 @@
-// src/renderer/shared/types.ts
-export interface IChannelList {
-  title: string;
-  channels: IChannel[];
+// Type definitions for the application
+
+// Auth related types
+export interface GoogleUser {
+  id: string;
+  email: string;
+  name: string;
+  picture: string;
+  given_name?: string;
+  family_name?: string;
+  date_joined?: string;
+  image?: string;
+  user_name?: string;
 }
 
-export interface IChannel {
-  title: string;
-  url: string;
-  icon?: React.ReactNode;
+export type TAuthTokens = {
+  access_token: string;
+  refresh_token: string;
+  id_token?: string;
+  expiry_date?: number;
+};
+
+// Message related types
+export interface TMessage {
+  id?: string;
+  message: string;
+  profile: GoogleUser | null;
+  date: string;
+  channelId: string;
+  attachments?: TAttachment[];
+  reactions?: TReaction[];
 }
 
-export interface IChannelListItem {
-  title: string;
+export interface TAttachment {
+  id: string;
+  type: 'image' | 'file' | 'link';
   url: string;
-  icon?: React.ReactNode;
-  tools?: boolean;
-  isActive?: boolean;
+  name?: string;
+  size?: number;
+  thumbnail?: string;
+}
+
+export interface TReaction {
+  emoji: string;
+  count: number;
+  users: string[]; // Array of user IDs
+}
+
+// Channel related types
+export interface TChannel {
+  id: string;
+  name: string;
+  description?: string;
+  isPrivate: boolean;
+  members: string[]; // Array of user IDs
+  createdAt: string;
+  createdBy: string;
+  lastActivity?: string;
+  topic?: string;
+}
+
+// UI related types
+export interface TNotification {
+  id?: string;
+  type: 'info' | 'success' | 'warning' | 'error';
+  message: string;
+  title?: string;
+  duration?: number;
+  read?: boolean;
+}
+
+// Redux state types
+export interface MainState {
+  user_profile: GoogleUser | null;
+  isLoggedIn: boolean;
+  messages: Record<string, TMessage[]>; // Keyed by channelId
+  channels: TChannel[];
+  activeUsers: Record<string, GoogleUser[]>; // Keyed by channelId
+  notifications: TNotification[];
+  theme: 'light' | 'dark' | 'system';
+  loading: boolean;
+  error: string | null;
+  showAddChannel: boolean; // Added property for add channel modal state
+  show_join_server: boolean;
+}
+
+// API response types
+export interface ApiResponse<T> {
+  data?: T;
+  error?: string;
+  status: number;
+  success: boolean;
+}
+
+export interface GoogleCredentials {
+  access_token?: string;
+  refresh_token?: string;
+  id_token?: string;
+  expiry_date?: number;
 }
 
 export interface IServerBtn {
-  icon?: React.ReactNode;
+  icon?: any;
   img?: string;
-  title?: string;
+  title: string;
   url?: string;
-  onClick?: () => void;
+  onClick?: any;
+}
+
+export interface IChannelList {
+  title: string;
+  channels?: Array<{
+      title: string;
+      url: string;
+      icon?: any;
+  }>
 }
 
 export type TUserProfile = {
   name: string;
   user_name: string;
-  image: string;
   date_joined: string;
-  status: string;
-};
-
-export type TMessage = {
-  message: string;
-  profile: TUserProfile;
-  date: string;
-  channelId: string;
-};
-
-// Electron API types
-interface ElectronAPI {
-  auth: {
-    login: () => Promise<any>;
-    logout: () => Promise<boolean>;
-    isLoggedIn: () => Promise<boolean>;
-    getCurrentUser: () => Promise<any>;
-    onAuthSuccess: (callback: (user: any) => void) => void;
-    onAuthError: (callback: (error: string) => void) => void;
-    onRestoreSession: (callback: (user: any) => void) => void;
-  };
-}
-
-declare global {
-  interface Window {
-    electronAPI?: ElectronAPI;
-  }
+  id: number;
+  image: string;
 }

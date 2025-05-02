@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../shared/rdx-hooks";
 import { setShowAddChannel } from "../../shared/rdx-slice";
 
 const AddChannel = React.memo((props: any) => {
-    const show_container = useAppSelector(state => state.main.show_add_channel);
+    const show_container = useAppSelector(state => state.main.showAddChannel);
     const dispatch = useAppDispatch()
 
     const handleClose = React.useCallback(() => {
